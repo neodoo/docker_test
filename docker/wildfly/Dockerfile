@@ -19,7 +19,7 @@ COPY wait-mysql.sh /usr/local/bin/wait-mysql.sh
 
 
 ADD standalone.xml /opt/jboss/wildfly/standalone/configuration/standalone.xml
-ADD docker-test-1.0-SNAPSHOT.war /opt/jboss/wildfly/standalone/deployments/docker-test-1.0-SNAPSHOT.war
+#ADD docker-test-1.0-SNAPSHOT.war /opt/jboss/wildfly/standalone/deployments/docker-test-1.0-SNAPSHOT.war
 
 
 USER root

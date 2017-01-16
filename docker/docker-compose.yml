@@ -22,4 +22,6 @@ services:
     depends_on:
       - "mysqldb"
     command: sh /usr/local/bin/wait-mysql.sh
+    volumes:
+        - ./wildfly/docker-test-1.0-SNAPSHOT.war:/opt/jboss/wildfly/standalone/deployments/docker-test-1.0-SNAPSHOT.war
 
