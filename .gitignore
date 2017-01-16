@@ -1,0 +1,24 @@
+# NetBeans specific #
+**/**/nbproject/
+**/**/nbproject/private/
+**/**/build/
+**/**/nbbuild/
+**/**/dist/
+**/**/nbdist/
+#**/nbactions.xml
+**/**/nb-configuration.xml
+
+# Class Files #
+# Por si acaso se quisiera meter un .class
+#*.class
+
+# Package Files #
+# Estan subidos en el commons/lib todos los jars
+#*.jar  
+#*.war
+#*.ear
+
+# Para eclipse
+.project
+
+target

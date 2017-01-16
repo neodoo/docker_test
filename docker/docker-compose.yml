@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+
+  mysqldb:
+    build: ./mysql
+    container_name: mysqldb_docker_test
+    environment:
+      MYSQL_DATABASE: docker_test
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+      MYSQL_ROOT_PASSWORD: supersecret
+
+    ports:
+      - 53306:3306
+
+  wildfly:
+    build: ./wildfly
+    container_name: wildfly_docker_test
+    ports:
+      - 58080:8080
+    depends_on:
+      - "mysqldb"
+    command: sh /usr/local/bin/wait-mysql.sh
+
