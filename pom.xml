@@ -15,23 +15,39 @@
 
         <arquillian.cube.autostart />
         <version.javaee_7>1.0.1.Final</version.javaee_7>
-        <docker.api.version>1.12</docker.api.version>
+        <docker.api.version>1.24</docker.api.version>
         <docker.api.url>tcp://localhost:2375</docker.api.url>
     </properties>  
     
-    
-        <dependencyManagement>  
-            <dependencies>  
-                <dependency>  
-                    <groupId>org.jboss.arquillian</groupId>  
-                    <artifactId>arquillian-bom</artifactId>  
-                    <version>1.1.12.Final</version>  
-                    <scope>import</scope>  
-                    <type>pom</type>  
-                </dependency>  
-            </dependencies>  
-        </dependencyManagement>          
-    
+    <dependencyManagement>
+        <dependencies>
+            <!-- Use BOMs to set same versions in all dependencies -->
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>1.1.12.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+<!--            
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-drone-bom</artifactId>
+                <version>2.0.0.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.selenium</groupId>
+                <artifactId>selenium-bom</artifactId>
+                <version>2.53.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+-->            
+        </dependencies>
+    </dependencyManagement>
+     
     <dependencies>
             
         <dependency>
@@ -40,24 +56,11 @@
             <version>4.3.1.Final</version>
             <scope>provided</scope>            
         </dependency>
-        <!--
-        <dependency>
-            <groupId>unknown.binary</groupId>
-            <artifactId>hibernate-jpamodelgen-4.3.1.Final</artifactId>
-            <version>SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        -->
+        
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>1.0.0.Final</version>
-            <scope>provided</scope>            
-        </dependency>
-        <dependency>
-            <groupId>unknown.binary</groupId>
-            <artifactId>mysql-connector-java-5.1.23-bin</artifactId>
-            <version>SNAPSHOT</version>
             <scope>provided</scope>            
         </dependency>
         <dependency>
@@ -66,36 +69,73 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-        
 
-       
+    
+
         <dependency>
-            <groupId>org.arquillian.cube</groupId>
-            <artifactId>arquillian-cube-docker</artifactId> 
-            <version>1.0.0.Alpha15</version>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <dependency>  
-            <groupId>junit</groupId>  
-            <artifactId>junit</artifactId>  
-            <version>4.12</version>  
-            <scope>test</scope>            
-        </dependency>  
-        <dependency>  
-            <groupId>org.jboss.arquillian.junit</groupId>  
-            <artifactId>arquillian-junit-container</artifactId>  
-            <version>1.1.12.Final</version>
-            <scope>test</scope>            
-        </dependency>  
-        <dependency>  
-            <groupId>org.wildfly.arquillian</groupId>  
-            <artifactId>wildfly-arquillian-container-remote</artifactId>  
-            <version>2.0.2.Final</version>  
-            <scope>test</scope>            
-        </dependency>  
-       
+        <!-- Cube dependencies -->
+        <dependency>
+            <groupId>org.arquillian.cube</groupId>
+            <artifactId>arquillian-cube-docker</artifactId>
+            <version>1.0.0.Alpha16</version>
+            <scope>test</scope>
+        </dependency>
+<!--        
+        <dependency>
+            <groupId>org.arquillian.cube</groupId>
+            <artifactId>arquillian-cube-docker-drone</artifactId>
+            <version>1.0.0.Alpha16</version>
+            <scope>test</scope>
+        </dependency>
+-->        
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.5.2</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- Drone dependencies -->
+<!--        
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-drone-webdriver-depchain</artifactId>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+                <groupId>xml-apis</groupId>
+                <artifactId>xml-apis</artifactId>
+                <version>1.4.01</version>
+            <scope>test</scope>                
+        </dependency>        
+-->
+
+
+<!-- Para hacer deploy en varias versiones de Jboss y Wildfly de forma transparente
+<dependency>
+    <groupId>org.arquillian.container</groupId>
+    <artifactId>arquillian-container-chameleon</artifactId>
+    <version>1.0.0.Final-SNAPSHOT</version>
+    <scope>test</scope>
+</dependency>
+-->
+
     </dependencies>
+    
 
     <build>
         <plugins>
@@ -166,15 +206,6 @@
         
     </build>
     
-<!--    
-    <repositories>
-        <repository>
-            <id>unknown-jars-temp-repo</id>
-            <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
-            <url>file:${project.basedir}/lib</url>
-        </repository>
-    </repositories>
--->    
     <profiles>
         <profile>
             <id>wildfly-10</id>
@@ -182,7 +213,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <maven.test.skip>true</maven.test.skip>
+                <maven.test.skip>false</maven.test.skip>
                 <arquillian.launch>wildfly</arquillian.launch>
             </properties>
             <dependencies>
@@ -190,6 +221,7 @@
                     <groupId>org.wildfly.arquillian</groupId>  
                     <artifactId>wildfly-arquillian-container-remote</artifactId>  
                     <version>2.0.2.Final</version>  
+                    <scope>test</scope>
                 </dependency>                  
 
             </dependencies>
@@ -197,11 +229,5 @@
         
           
     </profiles>
-    <repositories>
-        <repository>
-            <id>unknown-jars-temp-repo</id>
-            <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
-            <url>file:${project.basedir}/lib</url>
-        </repository>
-    </repositories>
+
 </project>

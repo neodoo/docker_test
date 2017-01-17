@@ -8,15 +8,17 @@
    RMI is a difficult protocol to configure :(.    -->
 
     <extension qualifier="docker">
+<!--        <property name="serverUri">http://localhost:2375</property>-->
         <property name="serverVersion">${docker.api.version}</property>
-        <property name="autoStartContainers">mysqldb</property>              
-        <property name="dockerContainersFile">docker/docker-compose.yml</property>
+        <property name="autoStartContainers">mysqldb</property>
+        <property name="dockerContainersFile">docker_cube/docker-compose.yml</property>
     </extension>
 
-    <container qualifier="wildfly">
+    <container qualifier="wildfly" default="true">
         <configuration>
-            <property name="user">admin</property>
-            <property name="pass">mypass</property>
+            <property name="managementPort">9990</property>
+            <property name="username">admin</property>
+            <property name="password">Admin#70365</property>
         </configuration>
     </container>
 </arquillian>
