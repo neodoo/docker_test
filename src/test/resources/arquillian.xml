@@ -8,17 +8,38 @@
    RMI is a difficult protocol to configure :(.    -->
 
     <extension qualifier="docker">
-<!--        <property name="serverUri">http://localhost:2375</property>-->
         <property name="serverVersion">${docker.api.version}</property>
-        <property name="autoStartContainers">mysqldb</property>
+<!--        <property name="autoStartContainers">mysqldb_docker_test</property>-->
         <property name="dockerContainersFile">docker_cube/docker-compose.yml</property>
+        
+
+        <property name="cubeSpecificProperties">
+            mysqldb_docker_test:
+              removeVolumes: true
+              await:
+                strategy: sleeping
+                sleepTime: 30s
+            wildfly_docker_test:
+              removeVolumes: true
+              await:
+                strategy: sleeping
+                sleepTime: 30s          
+        </property>
+
+        
+     
     </extension>
 
-    <container qualifier="wildfly" default="true">
+    <container qualifier="wildfly_docker_test" default="true">
         <configuration>
-            <property name="managementPort">9990</property>
+            <property name="managementPort">59990</property>
             <property name="username">admin</property>
             <property name="password">Admin#70365</property>
         </configuration>
     </container>
+    
+    <extension qualifier="reporter">
+        <property name="report">html5</property>
+    </extension>
+    
 </arquillian>

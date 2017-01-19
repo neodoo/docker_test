@@ -1,4 +1,4 @@
-FROM jboss/wildfly
+FROM jboss/wildfly:10.1.0.final
 
 ENV http_proxy http://proxy-idc.carreras.sa:8080
 ENV https_proxy http://proxy-idc.carreras.sa:8080

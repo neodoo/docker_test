@@ -9,6 +9,8 @@ ENV MYSQL_ROOT_PASSWORD=supersecret
 ENV MYSQL_USER=mysql
 ENV MYSQL_PASSWORD=mysql
       
-ADD schema.sql /docker-entrypoint-initdb.d
+COPY schema.sql /docker-entrypoint-initdb.d
 
 EXPOSE 3306
+
+

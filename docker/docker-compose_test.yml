@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+
+  mysqldb:
+    build: ./docker/mysql
+    container_name: mysqldb_docker_test
+
+    ports:
+      - 53306:3306
+
+  wildfly:
+    build: ./docker/wildfly
+    container_name: wildfly_docker_test
+    ports:
+      - 58080:8080
+    depends_on:
+      - "mysqldb"
+    command: sh /usr/local/bin/wait-mysql.sh
+    volumes:
+        - ./wildfly/docker-test-1.0-SNAPSHOT.war:/opt/jboss/wildfly/standalone/deployments/docker-test-1.0-SNAPSHOT.war
+

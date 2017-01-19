@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.neodoo.docker.test.service;
 
 import com.neodoo.docker.test.Table1;
+import com.neodoo.docker.test.dao.Table1FacadeDAO;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,70 +17,59 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author rengar
+ * @author manuel.aznar@neodoo.es
  */
 @Stateless
 @Path("com.neodoo.docker.test.table1")
-public class Table1FacadeREST extends AbstractFacade<Table1> {
+public class Table1REST  {
 
-    @PersistenceContext(unitName = "com.neodoo_docker-test_war_1.0-SNAPSHOTPU")
-    private EntityManager em;
-
-    public Table1FacadeREST() {
-        super(Table1.class);
-    }
-
+    @EJB
+    Table1FacadeDAO table1FacadeDAO;
+            
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Table1 entity) {
-        super.create(entity);
+        table1FacadeDAO.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Integer id, Table1 entity) {
-        super.edit(entity);
+        table1FacadeDAO.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
+        table1FacadeDAO.remove(table1FacadeDAO.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Table1 find(@PathParam("id") Integer id) {
-        return super.find(id);
+        return table1FacadeDAO.find(id);
     }
 
     @GET
-    @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Table1> findAll() {
-        return super.findAll();
+        return table1FacadeDAO.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Table1> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+        return table1FacadeDAO.findRange(new int[]{from, to});
     }
 
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+        return String.valueOf(table1FacadeDAO.count());
     }
     
 }
