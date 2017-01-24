@@ -5,7 +5,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.junit.InSequence;
+import org.jboss.arquillian.persistence.Cleanup;
+import org.jboss.arquillian.persistence.ShouldMatchDataSet;
+import org.jboss.arquillian.persistence.UsingDataSet;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -17,6 +19,8 @@ import org.junit.runner.RunWith;
  * @author manuel.aznar@neodoo.es>
  */
 @RunWith(Arquillian.class)
+@UsingDataSet("datasets/com.neodoo.docker.test.dao.PersistenceTestCase.xml")
+@Cleanup
 public class PersistenceTestCase {
 
 //    @Deployment
@@ -43,14 +47,14 @@ public class PersistenceTestCase {
     private Table1FacadeDAO table1FacadeDAO;
 
     @Test
-    @InSequence(1)
+//    @InSequence(1)
     public void shouldCountEquals2() throws Exception {
         System.out.println("shouldCountEquals2");
         Assert.assertEquals(2, table1FacadeDAO.count());
     }
 
     @Test
-    @InSequence(2)
+//    @InSequence(2)
     public void shouldSelect2() throws Exception {
         System.out.println("shouldSelect2");
         List<Table1> lstTable1 = table1FacadeDAO.findAll();
@@ -59,7 +63,9 @@ public class PersistenceTestCase {
     }
 
     @Test
-    @InSequence(3)
+    //@InSequence(3)
+    @ShouldMatchDataSet(value = "datasets/expected-com.neodoo.docker.test.dao.PersistenceTestCase#shouldInsertAfterSelect3.xml", 
+            excludeColumns = {"id"})    
     public void shouldInsertAfterSelect3() throws Exception {
         System.out.println("shouldInsertAfterSelect3");
 
@@ -71,6 +77,5 @@ public class PersistenceTestCase {
     }
 
     
-//    @UsingDataSet("datasets/users.yml")
-//    @ShouldMatchDataSet("datasets/expected-users.yml")
+
 }

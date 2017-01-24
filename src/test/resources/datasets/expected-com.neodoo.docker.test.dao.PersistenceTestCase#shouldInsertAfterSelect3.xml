@@ -1,0 +1,6 @@
+<!--?xml version="1.0" encoding="utf-8"?-->
+<dataset>
+  <table1 id="1" nom="nom1"/>
+  <table1 id="2" nom="nom2"/>
+  <table1 id="3" nom="nom3"/>
+</dataset>

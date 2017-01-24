@@ -7,6 +7,10 @@
   <!-- We have to bind the docker hostname and port, otherwise RMI will choose a random port, which we can't forward to the docker host.
    RMI is a difficult protocol to configure :(.    -->
 
+    <extension qualifier="cube">
+        <property name="connectionMode">STARTORCONNECTANDLEAVE</property>
+    </extension>
+
     <extension qualifier="docker">
         <property name="serverVersion">${docker.api.version}</property>
 <!--        <property name="autoStartContainers">mysqldb_docker_test</property>-->
@@ -42,4 +46,17 @@
         <property name="report">html5</property>
     </extension>
     
+   
+    <extension qualifier="persistence">
+        <property name="defaultDataSource">java:jboss/datasources/DockerTestDS</property>
+        <property name="defaultCleanupPhase">BEFORE</property>
+        <property name="defaultCleanupStrategy">STRICT</property> <!-- USED_TABLES_ONLY -->
+        <property name="defaultDataSeedStrategy">CLEAN_INSERT</property>           
+    </extension>    
+    
+<!--    
+    <extension qualifier="webdriver">
+        <property name="browser">firefox</property>
+    </extension>    
+-->    
 </arquillian>
