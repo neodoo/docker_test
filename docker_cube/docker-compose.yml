@@ -3,26 +3,26 @@ version: '2'
 services:
 
   mysqldb_docker_test:
-    containername: mysqldb_docker_test
+    container_name: mysqldb_docker_test
     build:
-      context: ./docker_cube/mysql
+      context: ./mysql
     volumes:
-      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./mysql/schema.sql:/docker-entrypoint-initdb.d/schema.sql
     ports:
       - 53306:3306
 
   wildfly_docker_test:
-    containername: wildfly_docker_test
+    container_name: wildfly_docker_test
     build:
-      context: ./docker_cube/wildfly
+      context: ./wildfly
     ports:
       - 58080:8080
       - 59990:9990
     depends_on:
       - "mysqldb_docker_test"
     volumes:
-      - ./mysql-connector-java-5.1.30-bin.jar:/opt/jboss/wildfly/standalone/deployments/mysql-connector-java-5.1.30-bin.jar
-      - ./standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml
+      - ./wildfly/mysql-connector-java-5.1.30-bin.jar:/opt/jboss/wildfly/standalone/deployments/mysql-connector-java-5.1.30-bin.jar
+      - ./wildfly/standalone.xml:/opt/jboss/wildfly/standalone/configuration/standalone.xml
 
 
 

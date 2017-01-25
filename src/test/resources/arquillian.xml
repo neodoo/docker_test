@@ -8,13 +8,16 @@
    RMI is a difficult protocol to configure :(.    -->
 
     <extension qualifier="cube">
-        <property name="connectionMode">STARTORCONNECTANDLEAVE</property>
+        <!-- Uso este en local poque no se puede arrancar el entorno con el compose -->
+        <!--<property name="connectionMode">STARTORCONNECTANDLEAVE</property>-->
+        <!-- Este es el bueno porque si esta arrancado conecta y si no lo arranca y para. Esto es para el jenkins -->
+        <property name="connectionMode">STARTORCONNECT</property>
     </extension>
 
     <extension qualifier="docker">
         <property name="serverVersion">${docker.api.version}</property>
 <!--        <property name="autoStartContainers">mysqldb_docker_test</property>-->
-        <property name="dockerContainersFile">docker_cube/docker-compose.yml</property>
+        <property name="dockerContainersFile">docker_cube/docker-compose-cube.yml</property>
         
 
         <property name="cubeSpecificProperties">
