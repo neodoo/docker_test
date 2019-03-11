@@ -15,8 +15,6 @@
     </extension>
 
     <extension qualifier="docker">
-        <property name="serverVersion">${docker.api.version}</property>
-<!--        <property name="autoStartContainers">mysqldb_docker_test</property>-->
         <property name="dockerContainersFile">docker_cube/docker-compose-cube.yml</property>
         
 
@@ -56,6 +54,15 @@
         <property name="defaultCleanupStrategy">STRICT</property> <!-- USED_TABLES_ONLY -->
         <property name="defaultDataSeedStrategy">CLEAN_INSERT</property>           
     </extension>    
+    
+    <extension qualifier="persistence-dbunit">
+        <property name="datatypeFactory">org.dbunit.ext.mysql.MySqlDataTypeFactory</property>
+        <property name="metadataHandler">org.dbunit.ext.mysql.MySqlMetadataHandler</property>          
+    </extension>      
+    
+    <extension qualifier="persistence-script">
+        <property name="showSql">true</property>
+    </extension>         
 
     <extension qualifier="restassured">
         <!-- Port because compose expose some ports -->

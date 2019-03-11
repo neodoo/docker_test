@@ -2,7 +2,6 @@ package com.neodoo.docker.test.service;
 
 import com.neodoo.docker.test.Table1;
 import io.restassured.RestAssured;
-import static io.restassured.RestAssured.given;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.path.json.JsonPath;
 import java.util.List;
@@ -40,59 +39,39 @@ public class Table1RESTTestCase {
 
     @BeforeClass
     public static void init() {
-//        // http://localhost:58080/docker_test/webresources/com.neodoo.docker.test.table1/
-//        RestAssured.baseURI = "http://localhost";
-//        RestAssured.port = 58080;
-//        RestAssured.basePath = "/docker_test_client/webresources/";
-//        RestAssured.config = RestAssuredConfig.config().redirect(new RedirectConfig().followRedirects(true).allowCircularRedirects(true));
-//        //RestAssured.authentication = RestAssured.form("admin", "test", new FormAuthConfig("j_security_check", "j_username", "j_password"));
+
     }
+
 
     @Test
     public void shouldList2Elements() throws Exception {
- 
+
         // Example with JsonPath
         String json = RestAssured
                 .given()
                 .spec(requestSpecBuilder.build())
                 .when()
                 .get("/docker_test_client/webresources/com.neodoo.docker.test.table1").asString();
-                
+
         System.out.println(json);
         JsonPath jp = new JsonPath(json);
         List<Map> lstMap = jp.get("");
         Assert.assertEquals("nom1", lstMap.get(0).get("nom"));
 
-
     }
-    
-//    @Test
-//    public void shouldList2ElementsWithGson() throws Exception {
-// 
-//        List<Table1> lstTable1 = RestAssured
-//                .given()
-//                .spec(requestSpecBuilder.build())
-//                .when()
-//                .get("/docker_test_client/webresources/com.neodoo.docker.test.table1").as(List.class, ObjectMapperType.GSON);   
-//
-//        Assert.assertEquals("nom1", lstTable1.get(0).getNom());
-//
-//
-//    }
-        
+
     @Test
     public void shouldList3Elements() throws Exception {
- 
+
         Table1 table1 = new Table1();
         table1.setNom("nom3");
         RestAssured
-               .given()
-               .spec(requestSpecBuilder.build())
-               .contentType("application/json")
-               .body(table1)
-               .when()
-               .post("/docker_test_client/webresources/com.neodoo.docker.test.table1");            
-        
+                .given()
+                .spec(requestSpecBuilder.build())
+                .contentType("application/json")
+                .body(table1)
+                .when()
+                .post("/docker_test_client/webresources/com.neodoo.docker.test.table1");
 
         // Example with JsonPath
         String json = RestAssured
@@ -100,15 +79,12 @@ public class Table1RESTTestCase {
                 .spec(requestSpecBuilder.build())
                 .when()
                 .get("/docker_test_client/webresources/com.neodoo.docker.test.table1").asString();
-                
+
         System.out.println(json);
         JsonPath jp = new JsonPath(json);
         List<Map> lstMap = jp.get("");
-        Assert.assertEquals("nom3", lstMap.get(2).get("nom"));        
+        Assert.assertEquals("nom3", lstMap.get(2).get("nom"));
 
     }
-        
-    
-    
 
 }

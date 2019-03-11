@@ -1,8 +1,5 @@
 FROM mysql:5.7.15
 
-ENV http_proxy http://proxy-idc.carreras.sa:8080
-ENV https_proxy http://proxy-idc.carreras.sa:8080
-ENV no_proxy 127.0.0.1, localhost
 
 ENV MYSQL_DATABASE=docker_test 
 ENV MYSQL_ROOT_PASSWORD=supersecret

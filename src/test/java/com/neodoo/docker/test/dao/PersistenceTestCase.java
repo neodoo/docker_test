@@ -30,11 +30,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author manuel.aznar@neodoo.es>
+ * @author manuel.aznar@neodoo.es
  */
 @RunWith(Arquillian.class)
+
 @UsingDataSet("datasets/com.neodoo.docker.test.dao.PersistenceTestCase.xml")
 @Cleanup
+
+//@CleanupUsingScript(phase = TestExecutionPhase.BEFORE, value = {"cleanup-data_init.sql", "cleanup-comet.service.custom.ProcesarOperacionesServiceITTest.sql"})
+//@ApplyScriptBefore({"com.neodoo.docker.test.dao.PersistenceTestCase.sql"})
+
 public class PersistenceTestCase {
     
     @Resource(lookup = "java:jboss/datasources/DockerTestDS")
@@ -58,14 +63,12 @@ public class PersistenceTestCase {
     private Table1FacadeDAO table1FacadeDAO;
 
     @Test
-//    @InSequence(1)
     public void shouldCountEquals2() throws Exception {
         System.out.println("shouldCountEquals2");
         Assert.assertEquals(2, table1FacadeDAO.count());
     }
 
     @Test
-//    @InSequence(2)
     public void shouldSelect2() throws Exception {
         System.out.println("shouldSelect2");
         List<Table1> lstTable1 = table1FacadeDAO.findAll();
@@ -74,9 +77,12 @@ public class PersistenceTestCase {
     }
 
     @Test
-    //@InSequence(3)
     @ShouldMatchDataSet(value = "datasets/expected-com.neodoo.docker.test.dao.PersistenceTestCase#shouldInsertAfterSelect3.xml",
             excludeColumns = {"id"}, orderBy = "id")
+    
+    //@ApplyScriptBefore({"data_init.sql", "com.neodoo.docker.test.dao.PersistenceTestCase.sql"})
+    //@ShouldMatchDataSet(value = "datasets/expected-com.neodoo.docker.test.dao.PersistenceTestCase#shouldInsertAfterSelect3.json",
+    
     public void shouldInsertAfterSelect3() throws Exception {
         System.out.println("shouldInsertAfterSelect3");
 
