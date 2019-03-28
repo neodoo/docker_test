@@ -17,20 +17,22 @@
     <extension qualifier="docker">
         <property name="dockerContainersFile">docker_cube/docker-compose-cube.yml</property>
         
-
         <property name="cubeSpecificProperties">
+            
             mysqldb_docker_test:
               removeVolumes: true
               await:
                 strategy: sleeping
                 sleepTime: 30s
+            
             wildfly_docker_test:
               removeVolumes: true
               await:
                 strategy: sleeping
-                sleepTime: 30s          
-        </property>
+                sleepTime: 120s    
 
+
+        </property>
         
      
     </extension>
